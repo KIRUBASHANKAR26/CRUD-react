@@ -1,0 +1,7 @@
+.sidebar{
+    width: 25vw;
+    max-width: 25%;
+    height: 100vh;
+    background-color:#323E4D;
+    display: inline-block;
+}

@@ -1,6 +1,7 @@
 import React,{ useState,useEffect } from 'react';
 import "./style.css";
 import Api from "../../api/api";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const Taskform = () => {
@@ -17,6 +18,7 @@ const Taskform = () => {
     const [EditTime, setEditTime] = useState("")
     const [EditUser, setEditUser] = useState("")
     const [editId, seteditId] = useState("")
+    const [loader,setLoader] = useState(true)
 
     const handleInputTask = (e) => {
         setInputValue(e.target.value)
@@ -42,7 +44,7 @@ const Taskform = () => {
     const editInputUser = (e) => {
         setEditUser(e.target.value)
     }    
-    const taskDetails = (e) => {
+    const taskDetails = async(e) => {
         e.preventDefault();
         let request = {
             id:taskSaved?.length + 1,
@@ -52,19 +54,24 @@ const Taskform = () => {
             author:assignUser
         }
         console.log(request)
-        const response = Api.post("/task",request);
+        const response = await Api.post("/task",request,{headers:{"Content-Type" : "application/json"}})
+            .catch(function (error) {
+                console.log(error.response.data);
+            });
         setTasksaved([...taskSaved], response.data)
         setcreateTask(false)
     }
 
     useEffect(() => {
-        Api.get('/task')
+             Api.get('/task')
             .then(function (response) {
                 setTasksaved(response.data);
+                setLoader(false)
             })
             .catch(function (error) {
                 console.log(error);
             })
+    
     })
     const editButton = (e) => {
         setcreateTask(false)
@@ -75,7 +82,7 @@ const Taskform = () => {
             {
             seteditId(item.id)
             setEditValue(item.task)
-            setEditDate(item.data)
+            setEditDate(item.date)
             setEditTime(item.time)
             setEditUser(item.author)}
         );
@@ -111,7 +118,7 @@ const Taskform = () => {
 
     return ( 
         <div style={{display:"inline-block",width:"74vw",maxWidth:"100%",position: "relative",
-        top: "-15rem"}}>
+        margin: "10rem 1rem 0 20%"}}>
         <div className="container">
             <div className="form-header">
                 <h5>Task {taskSaved?.length}</h5>
@@ -176,16 +183,19 @@ const Taskform = () => {
                     
                 </form>
             </div>
-            <div>
-            {
-                taskSaved?.map((item) => 
+            <div className="saved-wrapper">
+            {   
+               loader?(<CircularProgress />):( taskSaved?.map((item) => 
+                
                 <div key={item.id} id={item.id}  className="save-data">
+                    <div className="img-wrapper">
+                        <img src="https://image.flaticon.com/icons/png/512/145/145867.png" alt="placeholder"/>
+                    </div>
                     <p>{item.task}</p>
                     <p>{item.date}</p>
-                    <p>{item.author}</p>
                     <button className="edit" onClick={editButton}>
-                        <i id={item.id} className="fas fa-edit"></i></button>
-                </div>)
+                    <i id={item.id} className="fas fa-pencil-alt"></i></button>
+                </div>))
             }
             </div>
 

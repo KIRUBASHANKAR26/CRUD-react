@@ -7,7 +7,7 @@ body{
     height: 100vh;
 }
 .container{
-    border: 1px solid rgb(150, 136, 136);
+    border: 1px solid #dee2e6;
     margin-left: 1rem;
     max-width: 400px;
 }
@@ -16,12 +16,12 @@ body{
     align-items: center;
     justify-content: space-between;
     padding-left:0.5rem ;
-    border-bottom: 1px solid rgb(150, 136, 136);
+    border-bottom: 1px solid #dee2e6;
 }
 .form-header button{
     padding: 0.5rem 0.7rem;
 
-    border-left: 1px solid rgb(150, 136, 136);
+    border-left: 1px solid #dee2e6;
     box-shadow: none;
     outline: none;
     border: none;
@@ -73,9 +73,12 @@ h5{
     font-weight: 400;
 }
 .save-data{
-    border:1px solid gray;
+    border:1px solid #dee2e6;
     padding: 0.5rem;
     position: relative;
+    margin: 1rem;
+    border-radius: 1rem;
+    background: #fff;
 }
 .save-data p:last-child{
     position: absolute;
@@ -83,8 +86,13 @@ h5{
     right: 0.5rem;
     transform: translateY(-50%);
 }
+.save-data > p:first-of-type{
+    color: rgb(158, 26, 26);
+}
 .edit{
-    border: none;
+    padding: 0.5rem;
+    border: 1px solid #dee2e6;
+    width: 2rem;
     cursor: pointer;
     box-shadow: none;
     position: absolute;
@@ -108,5 +116,14 @@ h5{
     background: transparent;
     cursor: pointer;
 }
-
+.img-wrapper{
+    background: lightblue;
+    border-radius: 4px;
+    padding-top: 4px;
+    margin-right: 1rem;
+    float: left;
+}
+.img-wrapper img{
+    width: 2rem;
+}
 
